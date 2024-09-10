@@ -1,0 +1,15 @@
+{
+  "name": "api-node-ask",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "4.17.21",
+    "ts-node": "10.9.2",
+    "typescript": "5.6.2"
+  }
+}
