@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { addPost } from "@controllers/posts";
 
-export const postRouter = Router()
+export const postRouter = Router();
 
-postRouter.post('/posts', addPost)
+postRouter.post("/posts", addPost);
