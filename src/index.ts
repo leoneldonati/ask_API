@@ -1,3 +1,6 @@
-import express from 'express'
+import { app } from './app'
+import { PORT } from '@config/env-variables'
 
-express().listen(3000, () => { console.log('conectado') })
+app.listen(PORT, () => {
+  console.log({ status: 'conectado', port: PORT, db: null, url: `http://localhost:${PORT}` })
+})
