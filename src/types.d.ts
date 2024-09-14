@@ -20,6 +20,8 @@ interface Image {
 interface Location {
   city: string;
   country: string;
+  region: string;
+  timezone: string;
 }
 interface Settings {
   colorScheme: 'dark' | 'light';
