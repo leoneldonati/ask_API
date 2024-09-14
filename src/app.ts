@@ -2,6 +2,7 @@ import { postRouter } from "@routes/posts";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
+import fileUpload from "express-fileupload";
 
 export const app = express();
 
@@ -16,6 +17,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // parsear cookies
 app.use(cookieParser());
+
+// subir imágenes
+app.use(fileUpload({ useTempFiles: true, tempFileDir: './src/temp-files' }));
 
 // CORS
 app.use(
