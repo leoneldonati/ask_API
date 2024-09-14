@@ -22,3 +22,5 @@ export const HTTP_STATUS: ResponseStatus = {
     message: 'Algunos datos no fueron encontrados o no existen.'
   }
 }
+
+export const DEFAULT_AVATAR = 'https://res.cloudinary.com/dzmuriaby/image/upload/v1722284545/vwggt3mhaxyazwwqys97.svg'
