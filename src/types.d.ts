@@ -1,4 +1,5 @@
 import type { Request } from "express";
+import type { ObjectId } from "mongodb";
 
 export interface RawFile {
   name: string;
@@ -30,20 +31,8 @@ declare global {
   interface ExtendedReqWithToken extends Request {
     decodedToken?: any;
   }
-
-  interface PostWithOutId {
-    content: string;
-    ownerId: string;
-    createdAt: Date;
-    updatedAt: Date;
-    images: Array<Image> | null;
-    likes: Array<string>;
-    comments: Array;
-    links: Array<string> | null;
-    usersMentioned: Array<string> | null;
-  }
-
-  interface UserWithOutId {
+  interface User {
+    _id: ObjectId;
     name: string;
     username: string;
     bio: string;
@@ -57,9 +46,26 @@ declare global {
     isVerified: boolean;
     location: Location;
     settings: Settings;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: Date | string;
+    updatedAt: Date | string;
     followers: Array<string>;
     followed: Array<string>;
   }
+  interface UserWithoutId extends Omit<User, '_id'> {}
+
+  interface Post {
+    _id: ObjectId;
+    content: string;
+    ownerId: string;
+    createdAt: Date | string;
+    updatedAt: Date | string;
+    images: Array<Image> | null;
+    likes: Array<string>;
+    comments: Array;
+    links: Array<string> | null;
+    usersMentioned: Array<string> | null;
+  }
+
+  interface PostWithoutId extends Omit<Post, '_id'> {}
+
 }

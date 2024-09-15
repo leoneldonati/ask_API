@@ -1,36 +1,49 @@
 import { CLD_KEY, CLD_NAME, CLD_SECRET } from "@config/env-variables";
-import { v2 } from "cloudinary";
-import { rm } from "node:fs/promises";
-import { Image, RawFile } from "types";
+import { v2 as cloudinary } from "cloudinary";
+import { Readable } from "stream";
+import type { Image } from "types";
 
-v2.config({
+cloudinary.config({
   cloud_name: CLD_NAME,
   api_key: CLD_KEY,
   api_secret: CLD_SECRET,
 });
 
 export async function uploadFiles(
-  files: Array<RawFile>,
+  files: Buffer[],
   config?: { folder: string }
 ): Promise<Image[] | null> {
-  const filePaths = files.map((file) => file.tempFilePath);
-
   try {
-    const promisesArray = filePaths.map(
-      async (path) => await v2.uploader.upload(path, { folder: config?.folder })
-    );
+    const promises = files.map((buffer) => {
+      return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          { folder: config?.folder },
+          (error, result) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve({
+                secureUrl: result?.secure_url,
+                publicId: result?.public_id,
+                height: result?.height,
+                width: result?.width,
+              });
+            }
+          }
+        );
 
-    const imagesArray = await Promise.all(promisesArray);
+        // CONVERTIR EL BUFFER EN UN STREAM DE DATOS
+        const readableStream = new Readable();
+        readableStream.push(buffer);
+        readableStream.push(null);
 
-    return imagesArray.map(({ secure_url, public_id, width, height }) => ({
-      secureUrl: secure_url,
-      publicId: public_id,
-      width,
-      height,
-    }));
+        readableStream.pipe(uploadStream);
+      });
+    });
+
+    return await Promise.all(promises) as Image[];
   } catch (error) {
+    console.error("Error uploading files:", error);
     return null;
-  } finally {
-    filePaths.forEach(async (path) => await rm(path));
   }
 }

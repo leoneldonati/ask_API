@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // subir imágenes
-app.use(fileUpload({ useTempFiles: true, tempFileDir: './src/temp-files' }));
+app.use(fileUpload());
 
 // CORS
 app.use(

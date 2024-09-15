@@ -5,7 +5,8 @@ type ResponseObject = {
 interface ResponseStatus {
   unauthorized: ResponseObject;
   badReq: ResponseObject;
-  notFound: ResponseObject
+  notFound: ResponseObject;
+  serverError: ResponseObject;
 }
 
 export const HTTP_STATUS: ResponseStatus = {
@@ -15,11 +16,15 @@ export const HTTP_STATUS: ResponseStatus = {
   },
   badReq: {
     number: 400,
-    message: 'Algunos datos están mal, por favor vuelve hacer la petición con la información correcta.'
+    message: 'Algunos datos están mal o no existen, por favor vuelve hacer la petición con la información correcta.'
   },
   notFound: {
     number: 404,
     message: 'Algunos datos no fueron encontrados o no existen.'
+  },
+  serverError: {
+    number: 500,
+    message: 'Ocurrió un error en el servidor, por favor intenta nuevamente.'
   }
 }
 
