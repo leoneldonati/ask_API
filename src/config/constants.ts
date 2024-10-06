@@ -27,5 +27,8 @@ export const HTTP_STATUS: ResponseStatus = {
     message: 'Ocurrió un error en el servidor, por favor intenta nuevamente.'
   }
 }
-
+export const COOKIE_NAME = 'session'
+export const COOKIE_CONFIG = {
+  
+}
 export const DEFAULT_AVATAR = 'https://res.cloudinary.com/dzmuriaby/image/upload/v1722284545/vwggt3mhaxyazwwqys97.svg'
